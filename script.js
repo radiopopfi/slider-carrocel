@@ -5,6 +5,7 @@
  */
 
 let onSlide = false;
+let slideInterval;
 
 window.addEventListener("load", () => {
    autoSlide();
@@ -18,17 +19,17 @@ window.addEventListener("load", () => {
    const buttonNext = document.querySelector(".carousel_button__next");
    buttonPrev.addEventListener("click", () => slide(getItemActiveIndex() - 1));
    buttonNext.addEventListener("click", () => slide(getItemActiveIndex() + 1));
-})
+});
 
 function autoSlide() {
-   setInterval(() => {
+   clearInterval(slideInterval); // Limpa o intervalo anterior para evitar duplicação
+   slideInterval = setInterval(() => {
       slide(getItemActiveIndex() + 1);
    }, 3000); // slide speed = 3s
 }
 
 function slide(toIndex) {
-   if (onSlide)
-      return;
+   if (onSlide) return;
    onSlide = true;
 
    const itemsArray = Array.from(document.querySelectorAll(".carousel_item"));
@@ -37,28 +38,20 @@ function slide(toIndex) {
    let newItemActive = null;
 
    if (toIndex > itemActiveIndex) {
-      // check if toIndex exceeds the number of carousel items
       if (toIndex >= itemsArray.length) {
          toIndex = 0;
       }
-
       newItemActive = itemsArray[toIndex];
-
-      // start transition
       newItemActive.classList.add("carousel_item__pos_next");
       setTimeout(() => {
          newItemActive.classList.add("carousel_item__next");
          itemActive.classList.add("carousel_item__next");
       }, 20);
    } else {
-      // check if toIndex exceeds the number of carousel items
       if (toIndex < 0) {
          toIndex = itemsArray.length - 1;
       }
-
       newItemActive = itemsArray[toIndex];
-
-      // start transition
       newItemActive.classList.add("carousel_item__pos_prev");
       setTimeout(() => {
          newItemActive.classList.add("carousel_item__prev");
@@ -66,14 +59,11 @@ function slide(toIndex) {
       }, 20);
    }
 
-   // remove all transition class and switch active class
    newItemActive.addEventListener("transitionend", () => {
       itemActive.className = "carousel_item";
       newItemActive.className = "carousel_item carousel_item__active";
       onSlide = false;
-   }, {
-      once: true
-   });
+   }, { once: true });
 
    slideIndicator(toIndex);
 }
@@ -81,8 +71,7 @@ function slide(toIndex) {
 function getItemActiveIndex() {
    const itemsArray = Array.from(document.querySelectorAll(".carousel_item"));
    const itemActive = document.querySelector(".carousel_item__active");
-   const itemActiveIndex = itemsArray.indexOf(itemActive);
-   return itemActiveIndex;
+   return itemsArray.indexOf(itemActive);
 }
 
 function slideIndicator(toIndex) {
@@ -93,3 +82,7 @@ function slideIndicator(toIndex) {
    dotActive.classList.remove("carousel_dot__active");
    newDotActive.classList.add("carousel_dot__active");
 }
+
+// Detecta quando a página volta a ter o foco e reinicia o autoSlide
+window.addEventListener("focus", autoSlide);
+window.addEventListener("blur", () => clearInterval(slideInterval)); // Pausa quando a página perde o foco
