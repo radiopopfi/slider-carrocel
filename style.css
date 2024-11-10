@@ -4,93 +4,93 @@
    Github Profile    : https://github.com/codingstime
  */
 
-/* Reset */
-:root {
+/* reset */
+:root{
    font-family: "Raleway", sans-serif;
    font-size: 16px;
    font-weight: 400;
 }
 
-* {
+*{
    margin: 0;
-   padding: 0;
    box-sizing: border-box;
 }
 
-/* Carousel container */
-.carousel {
+/* carousel */
+.carousel{
    position: relative;
-   overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
-   max-width: 100%; /* Garante que o carrossel ocupe no máximo a largura da página */
-   margin: 0 auto; /* Centraliza o carrossel, se necessário */
 }
 
-/* Carousel inner container */
-.carousel_inner {
+.carousel_inner{
    width: 100%;
-   overflow: hidden; /* Evita qualquer barra de rolagem horizontal */
-   display: flex; /* Garante que os itens do carrossel fiquem alinhados horizontalmente */
+   overflow: hidden;
 }
 
-.carousel_item {
-   flex-shrink: 0; /* Evita que os itens diminuam de tamanho */
-   width: 100%; /* Ocupa toda a largura do contêiner */
-   display: none; /* Esconde todos os itens inicialmente */
+.carousel_inner::after{
+   content: "";
+   display: block;
+   clear: both;
 }
 
-/* Slide effect */
+.carousel_item{
+   position: relative;
+   float: left;
+   display: none;
+   width: 100%;
+   margin-right: -100%;
+}
+
+/* slide effect */
 .carousel_item__active,
 .carousel_item__pos_prev,
-.carousel_item__pos_next {
+.carousel_item__pos_next{
    display: block;
 }
 
-.carousel_item__pos_prev {
+.carousel_item__pos_prev{
    left: -100%;
 }
 
-.carousel_item__pos_next {
+.carousel_item__pos_next{
    left: 100%;
 }
 
-.carousel_item__prev {
+.carousel_item__prev{
    transform: translateX(100%);
-   transition: transform 0.5s ease-in-out;
+   transition: transform .5s ease-in-out;
 }
 
-.carousel_item__next {
+.carousel_item__next{
    transform: translateX(-100%);
-   transition: transform 0.5s ease-in-out;
+   transition: transform .5s ease-in-out;
 }
 
-/* Carousel fade effect */
+/* fade effect */
 .carousel__fade .carousel_item__pos_prev,
-.carousel__fade .carousel_item__pos_next {
+.carousel__fade .carousel_item__pos_next{
    left: 0;
    opacity: 0;
 }
 
 .carousel__fade .carousel_item__prev,
-.carousel__fade .carousel_item__next {
+.carousel__fade .carousel_item__next{
    transform: none;
    opacity: 1;
-   transition: opacity 0.5s ease-in-out;
+   transition: opacity .5s ease-in-out;
 }
 
 .carousel__fade .carousel_item__active.carousel_item__prev,
-.carousel__fade .carousel_item__active.carousel_item__next {
+.carousel__fade .carousel_item__active.carousel_item__next{
    opacity: 0;
 }
 
-/* Carousel image */
-.carousel_img {
-   width: 100%;
-   height: auto; /* Mantém a proporção das imagens */
+/* carousel */
+.carousel_img{
    display: block;
+   width: 100%;
 }
 
-/* Carousel caption */
-.carousel_caption {
+.carousel_caption{
    position: absolute;
    top: 0;
    left: 0;
@@ -105,46 +105,44 @@
    z-index: 1;
 }
 
-.carousel_title {
+.carousel_title{
    font-family: "Montserrat", sans-serif;
    font-weight: 600;
 }
 
-.carousel_description {
-   margin-top: 0.75rem;
+.carousel_description{
+   margin-top: .75rem;
    line-height: 150%;
 }
 
-/* Carousel indicators */
-.carousel_indicator {
+.carousel_indicator{
    position: absolute;
    bottom: 1rem;
    left: 50%;
    transform: translateX(-50%);
    display: flex;
    flex-direction: row;
-   gap: 0.5rem;
+   gap: .5rem;
    z-index: 1;
 }
 
-.carousel_dot {
+.carousel_dot{
    display: block;
-   padding: 0.25rem;
-   background-color: rgba(255, 255, 255, 0.25);
+   padding: .25rem;
+   background-color: rgba(255, 255, 255, .25);
    border: none;
    border-radius: 50%;
    cursor: pointer;
-   transition: background-color 0.5s ease-in-out;
+   transition: background-color .5s ease-in-out;
 }
 
-.carousel_dot__active {
+.carousel_dot__active{
    background-color: lightskyblue;
    cursor: default;
    pointer-events: none;
 }
 
-/* Carousel controls */
-.carousel_control {
+.carousel_control{
    position: absolute;
    top: 0;
    left: 0;
@@ -155,19 +153,40 @@
    height: 100%;
 }
 
-.carousel_button {
+.carousel_button{
    display: block;
    padding-inline: 1rem;
    font-family: "Raleway", sans-serif;
    font-size: 1.375rem;
    background-color: transparent;
-   color: rgba(255, 255, 255, 0.25);
+   color: rgba(255, 255, 255, .25);
    border: none;
    cursor: pointer;
-   transition: color 0.25s;
+   transition: color .25s;
    z-index: 1;
 }
 
-.carousel_button:hover {
-   color: rgba(135, 206, 250, 0.75);
+.carousel_button:hover{
+   color: rgba(135, 206, 250, .75);
+}
+
+/* Ajustes para evitar barra de rolagem horizontal extra */
+
+.image-equipe {
+   overflow: hidden; /* Esconde conteúdo extra que ultrapassa a largura */
+   width: 100%; /* O contêiner ocupa 100% da largura disponível */
+   max-width: 100%; /* Garante que o contêiner não ultrapasse a largura máxima */
+   margin: 0 auto; /* Centraliza o contêiner */
+}
+
+.widget-content {
+   width: 100%;
+   overflow: hidden; /* Evita que o conteúdo ultrapasse a largura */
+}
+
+.widget-content iframe {
+   width: 100%;
+   height: auto;
+   display: block;
+   border: none; /* Remove qualquer borda do iframe */
 }
